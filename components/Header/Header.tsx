@@ -1,13 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-// import { useEffect, useState } from 'react';
 import css from './Header.module.css';
 import { usePathname } from 'next/navigation';
-// import Link from 'next/link';
-// import AuthNavigation from '@/components/AuthNavigation/AuthNavigation';
-// import { usePathname, useRouter } from 'next/navigation';
-// import { useBasketStore } from '@/lib/store/basketStore';
 
 export default function Header() {
   const pathname = usePathname();

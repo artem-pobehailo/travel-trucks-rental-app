@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/Loader/Header/Header';
+import Header from '@/components/Header/Header';
 
 const geistSans = Inter({
   variable: '--font-geist-sans',

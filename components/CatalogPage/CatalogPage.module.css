@@ -1,0 +1,145 @@
+.wrapper {
+  padding-top: 48;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 40px;
+}
+.item {
+  display: flex;
+  gap: 24px;
+  margin: 0 auto;
+
+  box-sizing: border-box;
+
+  border: 1px solid #dadde1;
+  border-radius: 20px;
+  padding: 24px;
+}
+.imagi {
+  border-radius: 10px;
+  width: 292px;
+  height: 320px;
+}
+
+.itemTitel {
+  display: flex;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  align-items: center;
+  line-height: 1.33333;
+  color: #101828;
+  justify-content: space-between;
+  padding-bottom: 8px;
+}
+.svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+.text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.map {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 20px;
+  align-items: center;
+}
+.textMap {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+
+  line-height: 1.5;
+  color: #101828;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+.subText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #475467;
+  padding-bottom: 20px;
+}
+.auto {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 24px;
+  flex-wrap: wrap;
+  max-width: 390px;
+}
+
+.textAuto {
+  background: #f2f4f7;
+  mix-blend-mode: multiply;
+  border-radius: 100px;
+  padding: 12px 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  max-width: calc((390 - 16px) / 3);
+}
+
+.ButtonRed {
+  display: flex;
+  border-radius: 200px;
+  align-items: center;
+  justify-content: center;
+  width: 166px;
+  height: 56px;
+
+  background: #e44848;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+.ButtonRed:hover,
+.ButtonRed:focus {
+  background-color: #d84343;
+}
+
+.ButtonGray {
+  display: flex;
+
+  margin: 0 auto;
+  background: #fff;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: #101828;
+
+  border: 1px solid #dadde1;
+  border-radius: 200px;
+  align-items: center;
+  width: 145px;
+  height: 56px;
+  text-align: center;
+  justify-content: center;
+}
+
+.ButtonGray:hover,
+.ButtonGray:focus {
+  border: 1px solid 1px solid #d84343;
+}
