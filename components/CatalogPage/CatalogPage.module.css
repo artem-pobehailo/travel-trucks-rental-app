@@ -12,17 +12,31 @@
   display: flex;
   gap: 24px;
   margin: 0 auto;
-
   box-sizing: border-box;
-
   border: 1px solid #dadde1;
   border-radius: 20px;
   padding: 24px;
+  align-items: flex-start;
 }
-.imagi {
-  border-radius: 10px;
+
+.imageWrapper {
+  position: relative;
   width: 292px;
   height: 320px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.imagi {
+  object-fit: cover;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 550px;
+  overflow: hidden;
 }
 
 .itemTitel {
@@ -41,10 +55,24 @@
   height: 20px;
   display: block;
 }
+.titel {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+
+  line-height: 1.33333;
+  color: #101828;
+}
 .text {
   display: flex;
   align-items: center;
   gap: 12px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+
+  line-height: 1.33333;
+  color: #101828;
 }
 .map {
   display: flex;

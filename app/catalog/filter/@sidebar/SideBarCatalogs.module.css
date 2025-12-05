@@ -13,10 +13,13 @@
   line-height: 1.5;
   color: #6c717b;
 }
+.customSelect {
+  padding-top: 8px;
+}
 .textSidebar {
   display: flex;
   gap: 8px;
-
+  border: none;
   background: #f7f7f7;
   border-radius: 12px;
 

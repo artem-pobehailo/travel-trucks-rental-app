@@ -1,0 +1,23 @@
+export type Catalog = {
+  id: string;
+  name: string;
+  price: number;
+  rating: number;
+  location: string;
+  description: string;
+  transmission: string;
+  engine: string;
+  kitchen: boolean;
+  gas: string;
+  AC: boolean;
+  TV: boolean;
+  bathroom: boolean;
+  reviews: string[];
+  gallery: { original: string; thumb: string }[];
+  form?: string;
+  length?: string;
+  width?: string;
+  height?: string;
+  tank?: string;
+  consumption?: string;
+};

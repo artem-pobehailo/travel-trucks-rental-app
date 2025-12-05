@@ -1,0 +1,278 @@
+.categoriesSection {
+  max-width: 1440px;
+  width: 100%;
+  padding: 48px 64px 80px 64px;
+}
+.itemTitel {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.titel {
+  padding-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+
+  line-height: 1.33333;
+  color: #101828;
+}
+.map {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-self: start;
+  text-align: center;
+}
+.reviews {
+  display: flex;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #101828;
+  gap: 4px;
+  padding-bottom: 16px;
+}
+.review {
+  background: #fff;
+  padding-top: 56px;
+  height: 588px;
+}
+.location {
+  display: flex;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #101828;
+  gap: 4px;
+  padding-bottom: 16px;
+}
+
+.svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  stroke: #000;
+  fill: #f2f4f7;
+}
+.price {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+
+  line-height: 1.33333;
+  color: #101828;
+  padding-bottom: 28px;
+}
+.galleryList {
+  display: flex;
+  gap: 48px;
+  list-style: none;
+  padding-bottom: 28px;
+}
+.item {
+  max-width: calc((100% - 48px * 3) / 4);
+}
+.imageWrapper {
+  width: 292px;
+  height: 312px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.imagi {
+  object-fit: cover;
+}
+.subText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+
+  line-height: 1.5;
+  color: #475467;
+  padding-bottom: 60px;
+}
+.sectionActiv {
+  display: flex;
+  gap: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f2f4f7;
+}
+.butt {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+
+  line-height: 1.2;
+  color: #101828;
+  background: none;
+  border: none;
+  padding: 0;
+  position: relative;
+}
+
+.butt.active::after {
+  content: '';
+  position: absolute;
+  border-radius: 2px;
+  left: 0;
+  bottom: -27px;
+  width: 100%;
+  height: 5px;
+
+  background-color: #e44848;
+}
+
+.activ {
+  display: flex;
+  gap: 40px;
+
+  padding-top: 56px;
+}
+.featuresReviews {
+  width: 631px;
+  height: 588px;
+  background: #f7f7f7;
+  border-radius: 10px;
+}
+.features {
+  display: block;
+}
+
+.auto {
+  padding: 34px 52px;
+  display: flex;
+  gap: 8px;
+
+  flex-wrap: wrap;
+  max-width: 631px;
+}
+
+.textAuto {
+  background: #f2f4f7;
+  mix-blend-mode: multiply;
+  border-radius: 100px;
+  padding: 12px 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+
+  /* line-height: 24px; */
+  line-height: 1.5;
+  text-align: center;
+  color: #101828;
+}
+
+.datail {
+  display: block;
+  padding-left: 52px;
+  padding-right: 52px;
+}
+.subtitel {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #dadde1;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+
+  line-height: 1.2;
+  color: #101828;
+}
+
+.subList {
+  display: flex;
+  padding-top: 24px;
+  gap: 16px;
+  flex-direction: column;
+}
+.subItem {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+
+  line-height: 1.5;
+  text-align: center;
+  color: #101828;
+}
+
+.reviewHead {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 16px;
+}
+.reviewList {
+  list-style: none;
+  text-decoration: none;
+}
+.revText {
+  display: flex;
+  border-radius: 60px;
+  width: 60px;
+  height: 60px;
+  background: #f2f4f7;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+
+  line-height: 1.33333;
+  color: #e44848;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment {
+  width: 641px;
+  height: 588px;
+  border: 1px solid #dadde1;
+  border-radius: 10px;
+}
+.svgStar {
+  width: 16px;
+  height: 16px;
+  display: block;
+  stroke: #fff;
+}
+
+.svgStarGrey {
+  width: 16px;
+  height: 16px;
+  display: block;
+  stroke: #fff;
+}
+
+.rev {
+  display: flex;
+  text-align: center;
+}
+.reviewStar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reviewText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+
+  /* line-height: 24px; */
+  line-height: 1.5;
+  color: #475467;
+  padding-bottom: 44px;
+}

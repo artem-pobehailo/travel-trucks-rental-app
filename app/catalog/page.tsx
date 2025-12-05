@@ -1,2 +1,3 @@
-import CatalogPage from './filter/[...slug]/page.tsx';
+import CatalogPage from './filter/[...slug]/page';
+
 export default CatalogPage;
