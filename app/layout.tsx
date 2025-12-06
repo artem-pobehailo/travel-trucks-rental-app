@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: 'Travel Trucks',
-      url: '', // <--  / сайт
+      url: 'https://travel-trucks-rental-app-git-main-artem-pobehailos-projects.vercel.app/',
     },
   ],
   icons: {
@@ -33,11 +33,11 @@ export const metadata: Metadata = {
     title: 'TravelTrucks - Camper Rental Service',
     description:
       'TravelTrucks is a modern camper rental platform with a full catalog, advanced filters, detailed camper pages, reviews, and a booking form.',
-    url: '', // <-- заміни на робочий URL
+    url: 'https://travel-trucks-rental-app-git-main-artem-pobehailos-projects.vercel.app/',
     siteName: 'Travel Trucks',
     images: [
       {
-        url: '/og-image.png', // <-- заміни на шлях до ог-зображення або абсолютний URL
+        url: 'https://travel-trucks-rental-app-git-main-artem-pobehailos-projects.vercel.app/TravelTrucks.png',
         width: 1200,
         height: 630,
         alt: 'TravelTrucks - Camper Rental Serviceв',
@@ -55,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={`${geistSans.variable}`}>
         <TanStackProvider>
           <Header />

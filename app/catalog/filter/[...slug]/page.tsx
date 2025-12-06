@@ -18,7 +18,9 @@ export default function CatalogsPage() {
       style={{
         display: 'flex',
         gap: 64,
-        paddingLeft: 64,
+
+        margin: 0,
+        justifyContent: 'center',
       }}
     >
       <SideBarCatalog catalogs={catalogs} />

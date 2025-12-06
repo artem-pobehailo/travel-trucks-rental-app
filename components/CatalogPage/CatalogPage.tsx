@@ -73,8 +73,9 @@ export default function CatalogPage() {
                     src={catalog.gallery[0].original}
                     alt={catalog.name}
                     fill
+                    sizes=" 292px"
                     className={css.imagi}
-                    quality={100}
+                    quality={75}
                     loading="eager"
                   />
                 </div>
