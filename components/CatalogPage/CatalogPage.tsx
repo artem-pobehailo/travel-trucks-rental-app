@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Catalog } from '@/types/catalog';
 import { getCatalogs } from '@/lib/clientApi';
 import { useQuery } from '@tanstack/react-query';
+import Loader from '../Loader/Loader';
 export default function CatalogPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -43,27 +44,30 @@ export default function CatalogPage() {
   };
 
   if (catalogsQuery.isLoading && isFirstRender.current) {
-    return <p>Завантаження каталогів...</p>;
+    return <Loader />;
   }
 
   isFirstRender.current = false;
 
   if (!catalogs.length) {
-    return <p>Каталоги відсутні</p>;
+    return <p>There are no directories</p>;
   }
 
   return (
     <section className={css.wrapper}>
       <main className={css.mainContent}>
         <ul className={css.list}>
-          {catalogs.map(catalog => {
+          {catalogs.map((catalog, index) => {
             const loc = catalog.location
               .split(', ')
               .reverse()
               .join(', ');
             const price = Number(catalog.price).toFixed(2);
             return (
-              <li key={catalog.id} className={css.item}>
+              <li
+                key={`${catalog.id}-${index}`}
+                className={css.item}
+              >
                 <div className={css.imageWrapper}>
                   <Image
                     src={catalog.gallery[0].original}

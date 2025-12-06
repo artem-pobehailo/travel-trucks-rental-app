@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     },
   ],
   icons: {
-    icon: '/favicon.ico',
+    icon: '/TravelTrucks.png',
   },
   openGraph: {
     title: 'TravelTrucks - Camper Rental Service',

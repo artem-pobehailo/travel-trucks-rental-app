@@ -12,14 +12,14 @@ export default function SrarRating({
   const stars = [];
   for (let i = 0; i < starsRat; i++) {
     stars.push(
-      <svg key={`${i}`} className={css.svgStar}>
+      <svg key={`gold-${i}`} className={css.svgStar}>
         <use href="/sprite.svg#icon-Rating-1" />
       </svg>
     );
   }
   for (let i = 0; i < star; i++) {
     stars.push(
-      <svg key={`${i}`} className={css.svgStarGrey}>
+      <svg key={`grey-${i}`} className={css.svgStarGrey}>
         <use href="/sprite.svg#icon-Rating" />
       </svg>
     );

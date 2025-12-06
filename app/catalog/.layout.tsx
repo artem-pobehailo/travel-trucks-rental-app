@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import SideBarCatalog from './filter/@sidebar/SideBarCatalogs';
+import Loader from '@/components/Loader/Loader';
 
 type Props = {
   children: ReactNode;
@@ -16,7 +17,10 @@ export default function CatalogLayout({ children }: Props) {
         }}
       >
         <SideBarCatalog />
-        {children}
+
+        <Suspense fallback={<Loader />}>
+          {children}
+        </Suspense>
       </div>
     </>
   );

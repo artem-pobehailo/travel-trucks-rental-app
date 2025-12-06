@@ -1,0 +1,96 @@
+.bookingFormWrapper {
+  width: 641px;
+  height: 588px;
+  padding: 44px 57px;
+}
+.formTitel {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+
+  line-height: 1.2;
+  color: #101828;
+  padding-bottom: 8px;
+}
+
+.formText {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+
+  line-height: 1.5;
+  color: #6c717b;
+  padding-bottom: 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 24px;
+}
+
+.formInput {
+  border-radius: 12px;
+  padding-block: 18px;
+  padding-inline: 18px;
+  width: 527px;
+  height: 60px;
+  background: #f7f7f7;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+
+  line-height: 1.5;
+  color: #6c717b;
+  border: none;
+}
+
+.formArea {
+  border-radius: 10px;
+  padding-block: 18px 76px;
+  padding-inline: 18px;
+  width: 527px;
+  height: 118px;
+  background: #f7f7f7;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+
+  line-height: 1.5;
+  color: #6c717b;
+}
+.ButtonRed {
+  display: flex;
+  margin: 0 auto;
+  border-radius: 200px;
+  align-items: center;
+  justify-content: center;
+  width: 166px;
+  height: 56px;
+  background: #e44848;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.ButtonRed:hover,
+.ButtonRed:focus {
+  background-color: #d84343;
+}
+
+.error {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+
+  line-height: 1.2;
+  color: #f00a0a;
+  padding-bottom: 8px;
+}

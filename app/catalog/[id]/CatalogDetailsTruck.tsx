@@ -9,6 +9,7 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Loader from '@/components/Loader/Loader';
 import SrarRating from './StarRating';
+import BookingForm from './BookingForm';
 
 type Review = {
   reviewer_name: string;
@@ -73,7 +74,10 @@ export default function CatalogDetailsTruck() {
             img: { original: string; thumb: string },
             index: number
           ) => (
-            <li key={index} className={css.item}>
+            <li
+              key={`${catalog.id}-${index}`}
+              className={css.item}
+            >
               <div className={css.imageWrapper}>
                 <Image
                   src={img.original}
@@ -151,16 +155,7 @@ export default function CatalogDetailsTruck() {
                     AC
                   </p>
                 )}
-                {catalog.radio && (
-                  <p className={css.textAuto}>
-                    <span>
-                      <svg className={css.svg}>
-                        <use href="/sprite.svg#icon-ui-radios" />
-                      </svg>
-                    </span>
-                    Radio
-                  </p>
-                )}
+
                 {catalog.water && (
                   <p className={css.textAuto}>
                     <span>
@@ -269,35 +264,40 @@ export default function CatalogDetailsTruck() {
           {activeSection === 'reviews' && (
             <div className={css.review}>
               <ul className={css.reviewList}>
-                {catalog.reviews.map((review: Review) => (
-                  <li key={id} className={css.reviewItem}>
-                    <div className={css.reviewHead}>
-                      <p className={css.revText}>
-                        {review?.reviewer_name.charAt(0) ||
-                          'A'}
-                      </p>
-
-                      <div className={css.reviewStar}>
-                        <p className={css.reviewName}>
-                          {review.reviewer_name || 'A'}
+                {catalog.reviews.map(
+                  (review: Review, index: number) => (
+                    <li
+                      key={`${review.reviewer_name}-${review.reviewer_rating}-${index}`}
+                    >
+                      <div className={css.reviewHead}>
+                        <p className={css.revText}>
+                          {review?.reviewer_name.charAt(
+                            0
+                          ) || 'A'}
                         </p>
-                        <SrarRating
-                          rating={review.reviewer_rating}
-                        />
+
+                        <div className={css.reviewStar}>
+                          <p className={css.reviewName}>
+                            {review.reviewer_name || 'A'}
+                          </p>
+                          <SrarRating
+                            rating={review.reviewer_rating}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <p className={css.reviewText}>
-                      {review.comment}
-                    </p>
-                  </li>
-                ))}
+                      <p className={css.reviewText}>
+                        {review.comment}
+                      </p>
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           )}
         </div>
 
         <div className={css.comment}>
-          <p>w333333333333333</p>
+          <BookingForm />
         </div>
       </div>
     </section>

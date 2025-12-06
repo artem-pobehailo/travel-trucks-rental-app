@@ -5,16 +5,14 @@ export default function NotFoundPage() {
     <div className={styles.wrapper}>
       <div className={styles.box}>
         <h1 className={styles.code}>404</h1>
-        <h2 className={styles.title}>
-          Сторінку не знайдено
-        </h2>
+        <h2 className={styles.title}>Page not found</h2>
         <p className={styles.text}>
-          Схоже, що цієї сторінки не існує або вона була
-          переміщена.
+          This page does not appear to exist or has existed
+          moved.
         </p>
 
         <a href="/" className={styles.button}>
-          На головну
+          Home
         </a>
       </div>
     </div>
