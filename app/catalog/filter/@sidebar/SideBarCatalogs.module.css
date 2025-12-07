@@ -71,13 +71,23 @@
   border: 1px solid #dadde1;
   border-radius: 12px;
   mix-blend-mode: multiply;
+  transition: border 0.3s ease;
 
   width: calc((100% - 24px) / 3);
 }
 
-.item:active {
-  border: 1px solid #dadde1;
+.checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: absolute;
+  opacity: 0;
 }
+
+.item.checked {
+  border: 1px solid #e44848;
+}
+
 .textAuto {
   display: flex;
   flex-direction: column;
