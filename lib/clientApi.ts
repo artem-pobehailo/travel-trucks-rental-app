@@ -1,49 +1,45 @@
-import { Catalog } from '@/types/catalog';
 import { nextServer } from './api';
-import { CatalogFilters } from './store/catalogStore';
+import { isAxiosError } from 'axios';
 
 interface CatalogRequestParams {
-  page: number;
-  limit: number;
   location?: string;
   form?: string;
-  AC?: boolean;
-  kitchen?: boolean;
-  TV?: boolean;
-  bathroom?: boolean;
-  transmission?: string;
+  AC?: string;
+  kitchen?: string;
+  page?: number;
+  limit?: number;
 }
 
 export const getCatalogs = async (
+  params: CatalogRequestParams = {},
   page: number = 1,
-  limit: number = 23,
-  filters?: CatalogFilters
-): Promise<Catalog[]> => {
-  const params: CatalogRequestParams = { page, limit };
-
-  if (filters) {
-    if (filters.location)
-      params.location = filters.location;
-    if (filters.form) params.form = filters.form;
-    if (filters.AC !== undefined) params.AC = filters.AC;
-    if (filters.kitchen !== undefined)
-      params.kitchen = filters.kitchen;
-    if (filters.TV !== undefined) params.TV = filters.TV;
-    if (filters.bathroom !== undefined)
-      params.bathroom = filters.bathroom;
-    if (filters.transmission)
-      params.transmission = filters.transmission;
-  }
-
+  limit: number = 4
+) => {
   try {
-    const { data } = await nextServer.get<{
-      total: number;
-      items: Catalog[];
-    }>('/campers', { params });
-    return data.items || [];
-  } catch (error) {
-    console.error('Error fetching catalogs:', error);
-    throw new Error('Failed to fetch catalogs');
+    const response = await nextServer.get('/campers', {
+      params,
+    });
+    const items = response.data?.items || [];
+
+    return {
+      data: items,
+      total: response.data?.total || 0,
+      page: Number(params.page) || 1,
+      limit: Number(params.limit) || 4,
+      hasMore: items.length >= (Number(params.limit) || 4),
+    };
+  } catch (error: unknown) {
+    if (isAxiosError(error)) {
+      console.error(
+        'Error in getCampers:',
+        error.response?.data || error.message
+      );
+    } else if (error instanceof Error) {
+      console.error('Error in getCampers:', error.message);
+    } else {
+      console.error('Unknown error in getCampers');
+    }
+    throw error;
   }
 };
 

@@ -1,41 +1,42 @@
-import { Catalog } from '@/types/catalog';
 import { create } from 'zustand';
-
+import { Catalog } from '@/types/catalog';
 import { getCatalogs } from '../clientApi';
 
-export type CatalogFilters = {
+interface CatalogFilters {
   location: string;
-  AC: boolean;
-  transmission: string;
-  kitchen: boolean;
-  TV: boolean;
-  bathroom: boolean;
   form: string;
-};
-export type CatalogResponse = {
-  total: number;
-  items: Catalog[];
-};
+  AC: boolean;
+  kitchen: boolean;
+  bathroom: boolean;
+  TV: boolean;
+  transmission: string;
+}
 
-type CatalogStore = {
-  items: Catalog[];
-
-  total: number;
-  isLoading: boolean;
+interface CatalogState {
+  campers: Catalog[];
+  loading: boolean;
+  error: string | null;
+  noResults: boolean;
   page: number;
+  total: number;
   filters: CatalogFilters;
-  setFilters: (filters: CatalogFilters) => void;
-  loadCatalogs: (reset?: boolean) => Promise<void>;
-  loadMore: () => Promise<void>;
-};
 
-export const useCatalogStore = create<CatalogStore>(
+  setFilters: (filters: Partial<CatalogFilters>) => void;
+  fetchCampers: (
+    page?: number,
+    append?: boolean
+  ) => Promise<void>;
+  resetCampers: () => void;
+}
+
+export const useCatalogStore = create<CatalogState>(
   (set, get) => ({
-    items: [],
-    total: 0,
-    isLoading: false,
+    campers: [],
+    loading: false,
+    error: null,
+    noResults: false,
     page: 1,
-
+    total: 0,
     filters: {
       location: '',
       form: '',
@@ -46,40 +47,72 @@ export const useCatalogStore = create<CatalogStore>(
       transmission: '',
     },
 
-    setFilters: (filters: CatalogFilters) => {
-      const currentFilters = get().filters;
-      const filtersChanged = Object.keys(filters).some(
-        key =>
-          filters[key as keyof CatalogFilters] !==
-          currentFilters[key as keyof CatalogFilters]
-      );
-
-      if (filtersChanged) {
-        set({ filters, page: 1, items: [] });
-        get().loadCatalogs(true);
-      }
-    },
-
-    loadCatalogs: async (reset = false) => {
-      const { page, filters } = get();
-
-      set({ isLoading: true });
-
-      const data: Catalog[] = await getCatalogs(
-        page,
-        4,
-        filters
-      );
-
+    setFilters: newFilters => {
       set(state => ({
-        items: reset ? data : [...state.items, ...data],
-        isLoading: false,
+        filters: { ...state.filters, ...newFilters },
       }));
+
+      get().fetchCampers(1, false);
     },
 
-    loadMore: async () => {
-      set(state => ({ page: state.page + 1 }));
-      await get().loadCatalogs();
+    resetCampers: () =>
+      set({ campers: [], page: 1, total: 0 }),
+
+    fetchCampers: async function (
+      page = 1,
+      append = false
+    ) {
+      const { filters } = get();
+
+      set({ loading: true, error: null, noResults: false });
+
+      try {
+        const params: Record<string, string> = {};
+
+        if (filters.location)
+          params.location = filters.location;
+        if (filters.form) params.form = filters.form;
+
+        if (filters.AC) params.AC = 'true';
+        if (filters.kitchen) params.kitchen = 'true';
+        if (filters.TV) params.TV = 'true';
+        if (filters.bathroom) params.bathroom = 'true';
+
+        if (filters.transmission)
+          params.transmission = filters.transmission;
+
+        params.page = String(page);
+        params.limit = '4';
+
+        const result = await getCatalogs(params);
+
+        if (!result.data || result.data.length === 0) {
+          set({
+            campers: [],
+            noResults: true,
+            loading: false,
+            total: 0,
+          });
+          return;
+        }
+
+        set(state => ({
+          campers: append
+            ? [...state.campers, ...result.data]
+            : result.data,
+          total: result.total,
+          page,
+          loading: false,
+        }));
+      } catch (error) {
+        console.error('API error', error);
+        set({
+          error:
+            'The server cannot find such filter combinations',
+          loading: false,
+          campers: [],
+        });
+      }
     },
   })
 );

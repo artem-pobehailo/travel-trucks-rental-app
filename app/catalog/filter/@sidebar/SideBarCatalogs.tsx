@@ -16,84 +16,78 @@ interface LocalFilters {
   kitchen: boolean;
   bathroom: boolean;
   TV: boolean;
-  transmission: 'automatic' | 'manual' | '';
+  transmission: string;
 }
 
 export default function SideBarCatalog({
   catalogs = [],
 }: SideBarProps) {
   const { filters, setFilters } = useCatalogStore();
-  const [open, setOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] =
-    useState('');
+  const toggleAutomatic = () => {
+    setFilters({
+      transmission:
+        filters.transmission === 'automatic'
+          ? ''
+          : 'automatic',
+    });
+  };
 
   const [localFilters, setLocalFilters] =
     useState<LocalFilters>({
-      location: selectedLocation,
-      form: filters.form,
-      AC: filters.AC,
-      kitchen: filters.kitchen,
-      bathroom: filters.bathroom,
-      TV: filters.TV,
-      transmission:
-        filters.transmission === 'automatic' ||
-        filters.transmission === 'manual'
-          ? filters.transmission
-          : '',
+      location: '',
+      form: '',
+      AC: false,
+      kitchen: false,
+      bathroom: false,
+      TV: false,
+      transmission: '',
     });
+  const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    setLocalFilters(prevFilters => ({
-      ...prevFilters,
-      location: selectedLocation,
-    }));
-  }, [selectedLocation]);
-
-  const handleCheckboxChange = (
-    key: keyof LocalFilters
-  ) => {
-    setLocalFilters({
-      ...localFilters,
-      [key]: !localFilters[key],
-    });
-  };
-  const handleFormChange = (form: string) => {
-    setLocalFilters({
-      ...localFilters,
-      form,
-    });
-  };
-  const handleLocationChange = (location: string) => {
-    setSelectedLocation(location);
-  };
-  const handleTransmissionChange = (
-    value: 'automatic' | 'manual' | ''
-  ) => {
-    setLocalFilters({
-      ...localFilters,
-      transmission: value,
-    });
-  };
+  const safeCatalogs = Array.isArray(catalogs)
+    ? catalogs
+    : [];
 
   const locations = Array.from(
-    new Set(catalogs.map(c => c.location))
+    new Set(safeCatalogs.map(c => c.location))
   );
 
-  const handleSearch = () => {
-    setFilters({
-      ...filters,
-      ...localFilters,
-    });
+  const handleCheckbox = (key: keyof LocalFilters) => {
+    setLocalFilters(prev => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
   };
 
-  const filteredCatalogs = catalogs.filter(catalog => {
-    if (localFilters.transmission) {
-      return (
-        catalog.transmission === localFilters.transmission
-      );
-    }
-    return true;
-  });
+  const handleTransmission = (value: string) => {
+    setLocalFilters(prev => ({
+      ...prev,
+      transmission:
+        prev.transmission === value ? '' : value,
+    }));
+  };
+
+  const handleRadio = (
+    key: keyof LocalFilters,
+    value: string
+  ) => {
+    setLocalFilters(prev => ({
+      ...prev,
+      [key]: prev[key] === value ? '' : value,
+    }));
+  };
+
+  const handleLocation = (loc: string) => {
+    setLocalFilters(prev => ({
+      ...prev,
+      location: loc,
+    }));
+    setOpen(false);
+  };
+
+  const handleSearch = () => {
+    setFilters(localFilters);
+  };
 
   return (
     <div className={css.sidebar}>
@@ -107,17 +101,24 @@ export default function SideBarCatalog({
             <svg className={css.svg}>
               <use href="/sprite.svg#icon-map" />
             </svg>
-            {selectedLocation
-              ? selectedLocation
+            {localFilters.location
+              ? localFilters.location
                   .split(', ')
                   .reverse()
                   .join(', ')
               : 'Kyiv, Ukraine'}
+
+            {/* {selectedLocation
+              ? selectedLocation
+                  .split(', ')
+                  .reverse()
+                  .join(', ')
+              : 'Kyiv, Ukraine'} */}
           </button>
           {open && (
             <ul>
               {Array.from(
-                new Set(catalogs.map(c => c.location))
+                new Set(safeCatalogs.map(c => c.location))
               ).map(loc => {
                 const locat = loc
                   .split(', ')
@@ -128,7 +129,7 @@ export default function SideBarCatalog({
                     className={css.textSidebar}
                     key={loc}
                     onClick={() => {
-                      handleLocationChange(loc);
+                      handleLocation(loc);
                       setOpen(false);
                     }}
                   >
@@ -157,7 +158,7 @@ export default function SideBarCatalog({
               <input
                 type="checkbox"
                 checked={localFilters.AC}
-                onChange={() => handleCheckboxChange('AC')}
+                onChange={() => handleCheckbox('AC')}
                 className={css.checkbox}
               />
               <p className={css.textAuto}>
@@ -171,7 +172,6 @@ export default function SideBarCatalog({
             </label>
           </li>
 
-          {/* Трансмісія: автоматична */}
           <li
             className={`${css.item} ${localFilters.transmission === 'automatic' ? css.checked : ''}`}
           >
@@ -184,7 +184,7 @@ export default function SideBarCatalog({
                   localFilters.transmission === 'automatic'
                 }
                 onChange={() =>
-                  handleTransmissionChange('automatic')
+                  handleTransmission('automatic')
                 }
                 className={css.checkbox}
               />
@@ -199,60 +199,6 @@ export default function SideBarCatalog({
             </label>
           </li>
 
-          {/* Трансмісія: ручна */}
-          <li
-            className={`${css.item} ${localFilters.transmission === 'manual' ? css.checked : ''}`}
-          >
-            <label>
-              <input
-                type="radio"
-                name="transmission"
-                value="manual"
-                checked={
-                  localFilters.transmission === 'manual'
-                }
-                onChange={() =>
-                  handleTransmissionChange('manual')
-                }
-                className={css.checkbox}
-              />
-              <p className={css.textAuto}>
-                <span>
-                  <svg className={css.svgF}>
-                    <use href="/sprite.svg#icon-diagram" />
-                  </svg>
-                </span>
-                Manual
-              </p>
-            </label>
-          </li>
-
-          {/* Трансмісія: скинути вибір */}
-          <li
-            className={`${css.item} ${localFilters.transmission === '' ? css.checked : ''}`}
-          >
-            <label>
-              <input
-                type="radio"
-                name="transmission"
-                value=""
-                checked={localFilters.transmission === ''}
-                onChange={() =>
-                  handleTransmissionChange('')
-                }
-                className={css.checkbox}
-              />
-              <p className={css.textAuto}>
-                <span>
-                  <svg className={css.svgF}>
-                    <use href="/sprite.svg#icon-diagram" />
-                  </svg>
-                </span>
-                All
-              </p>
-            </label>
-          </li>
-
           <li
             className={`${css.item} ${localFilters.kitchen ? css.checked : ''}`}
           >
@@ -260,9 +206,7 @@ export default function SideBarCatalog({
               <input
                 type="checkbox"
                 checked={localFilters.kitchen}
-                onChange={() =>
-                  handleCheckboxChange('kitchen')
-                }
+                onChange={() => handleCheckbox('kitchen')}
                 className={css.checkbox}
               />
               <p className={css.textAuto}>
@@ -283,7 +227,7 @@ export default function SideBarCatalog({
               <input
                 type="checkbox"
                 checked={localFilters.TV}
-                onChange={() => handleCheckboxChange('TV')}
+                onChange={() => handleCheckbox('TV')}
                 className={css.checkbox}
               />
               <p className={css.textAuto}>
@@ -304,9 +248,7 @@ export default function SideBarCatalog({
               <input
                 type="checkbox"
                 checked={localFilters.bathroom}
-                onChange={() =>
-                  handleCheckboxChange('bathroom')
-                }
+                onChange={() => handleCheckbox('bathroom')}
                 className={css.checkbox}
               />
               <p className={css.textAuto}>
@@ -333,7 +275,7 @@ export default function SideBarCatalog({
                 name="vehicleType"
                 value="van"
                 checked={localFilters.form === 'van'}
-                onChange={() => handleFormChange('van')}
+                onChange={() => handleRadio('form', 'van')}
                 className={css.checkbox}
               />
               <p className={css.textAuto}>
@@ -359,7 +301,7 @@ export default function SideBarCatalog({
                   localFilters.form === 'fullyIntegrated'
                 }
                 onChange={() =>
-                  handleFormChange('fullyIntegrated')
+                  handleRadio('form', 'fullyIntegrated')
                 }
                 className={css.checkbox}
               />
@@ -383,7 +325,9 @@ export default function SideBarCatalog({
                 name="vehicleType"
                 value="alcove"
                 checked={localFilters.form === 'alcove'}
-                onChange={() => handleFormChange('alcove')}
+                onChange={() =>
+                  handleRadio('form', 'alcove')
+                }
                 className={css.checkbox}
               />
               <p className={css.textAuto}>
