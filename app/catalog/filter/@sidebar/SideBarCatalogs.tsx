@@ -22,15 +22,14 @@ interface LocalFilters {
 export default function SideBarCatalog({
   catalogs = [],
 }: SideBarProps) {
-  const { filters, setFilters } = useCatalogStore();
-  const toggleAutomatic = () => {
-    setFilters({
-      transmission:
-        filters.transmission === 'automatic'
-          ? ''
-          : 'automatic',
-    });
-  };
+  const { filters, setFilters, campers } =
+    useCatalogStore();
+
+  const safeCatalogs = campers;
+
+  const locations = Array.from(
+    new Set(safeCatalogs.map(c => c.location))
+  );
 
   const [localFilters, setLocalFilters] =
     useState<LocalFilters>({
@@ -43,14 +42,6 @@ export default function SideBarCatalog({
       transmission: '',
     });
   const [open, setOpen] = useState(false);
-
-  const safeCatalogs = Array.isArray(catalogs)
-    ? catalogs
-    : [];
-
-  const locations = Array.from(
-    new Set(safeCatalogs.map(c => c.location))
-  );
 
   const handleCheckbox = (key: keyof LocalFilters) => {
     setLocalFilters(prev => ({
@@ -94,32 +85,31 @@ export default function SideBarCatalog({
       <div className={css.location}>
         <h2 className={css.subTitel}>Location</h2>
         <div className={css.customSelect}>
-          <button
-            className={css.textSidebar}
-            onClick={() => setOpen(!open)}
-          >
-            <svg className={css.svg}>
-              <use href="/sprite.svg#icon-map" />
-            </svg>
-            {localFilters.location
-              ? localFilters.location
+          <div className={css.inputWrapper}>
+            <input
+              className={css.textSidebar}
+              type="text"
+              placeholder="City"
+              value={
+                localFilters.location
+                  ? localFilters.location
+                      .split(', ')
+                      .reverse()
+                      .join(', ')
+                  : ''
+              }
+              onChange={e => {
+                const reversed = e.target.value
                   .split(', ')
                   .reverse()
-                  .join(', ')
-              : 'Kyiv, Ukraine'}
-
-            {/* {selectedLocation
-              ? selectedLocation
-                  .split(', ')
-                  .reverse()
-                  .join(', ')
-              : 'Kyiv, Ukraine'} */}
-          </button>
+                  .join(', ');
+              }}
+              onFocus={() => setOpen(true)}
+            />
+          </div>
           {open && (
             <ul>
-              {Array.from(
-                new Set(safeCatalogs.map(c => c.location))
-              ).map(loc => {
+              {locations.map(loc => {
                 const locat = loc
                   .split(', ')
                   .reverse()
@@ -171,32 +161,30 @@ export default function SideBarCatalog({
               </p>
             </label>
           </li>
-
           <li
-            className={`${css.item} ${localFilters.transmission === 'automatic' ? css.checked : ''}`}
+            className={`${css.item} ${
+              localFilters.transmission === 'automatic'
+                ? css.checked
+                : ''
+            }`}
+            onClick={() => {
+              setLocalFilters(prev => ({
+                ...prev,
+                transmission:
+                  prev.transmission === 'automatic'
+                    ? ''
+                    : 'automatic',
+              }));
+            }}
           >
-            <label>
-              <input
-                type="radio"
-                name="transmission"
-                value="automatic"
-                checked={
-                  localFilters.transmission === 'automatic'
-                }
-                onChange={() =>
-                  handleTransmission('automatic')
-                }
-                className={css.checkbox}
-              />
-              <p className={css.textAuto}>
-                <span>
-                  <svg className={css.svgF}>
-                    <use href="/sprite.svg#icon-diagram" />
-                  </svg>
-                </span>
-                Automatic
-              </p>
-            </label>
+            <p className={css.textAuto}>
+              <span>
+                <svg className={css.svgF}>
+                  <use href="/sprite.svg#icon-diagram" />
+                </svg>
+              </span>
+              Automatic
+            </p>
           </li>
 
           <li
@@ -267,78 +255,79 @@ export default function SideBarCatalog({
         <h2 className={css.filterTitel}>Vehicle type</h2>
         <ul className={css.list}>
           <li
-            className={`${css.item} ${localFilters.form === 'van' ? css.checked : ''}`}
+            className={`${css.item} ${
+              localFilters.form === 'panelTruck'
+                ? css.checked
+                : ''
+            }`}
+            onClick={() =>
+              setLocalFilters(prev => ({
+                ...prev,
+                form:
+                  prev.form === 'panelTruck'
+                    ? ''
+                    : 'panelTruck',
+              }))
+            }
           >
-            <label>
-              <input
-                type="radio"
-                name="vehicleType"
-                value="van"
-                checked={localFilters.form === 'van'}
-                onChange={() => handleRadio('form', 'van')}
-                className={css.checkbox}
-              />
-              <p className={css.textAuto}>
-                <span>
-                  <svg className={css.svgF}>
-                    <use href="/sprite.svg#icon-bi_grid-1x2" />
-                  </svg>
-                </span>
-                Van
-              </p>
-            </label>
+            <p className={css.textAuto}>
+              <span>
+                <svg className={css.svgF}>
+                  <use href="/sprite.svg#icon-bi_grid-1x2" />
+                </svg>
+              </span>
+              Van
+            </p>
           </li>
 
           <li
-            className={`${css.item} ${localFilters.form === 'fullyIntegrated' ? css.checked : ''}`}
+            className={`${css.item} ${
+              localFilters.form === 'fullyIntegrated'
+                ? css.checked
+                : ''
+            }`}
+            onClick={() =>
+              setLocalFilters(prev => ({
+                ...prev,
+                form:
+                  prev.form === 'fullyIntegrated'
+                    ? ''
+                    : 'fullyIntegrated',
+              }))
+            }
           >
-            <label>
-              <input
-                type="radio"
-                name="vehicleType"
-                value="fullyIntegrated"
-                checked={
-                  localFilters.form === 'fullyIntegrated'
-                }
-                onChange={() =>
-                  handleRadio('form', 'fullyIntegrated')
-                }
-                className={css.checkbox}
-              />
-              <p className={css.textAuto}>
-                <span>
-                  <svg className={css.svgF}>
-                    <use href="/sprite.svg#icon-bi_grid" />
-                  </svg>
-                </span>
-                Fully Integrated
-              </p>
-            </label>
+            <p className={css.textAuto}>
+              <span>
+                <svg className={css.svgF}>
+                  <use href="/sprite.svg#icon-bi_grid" />
+                </svg>
+              </span>
+              Fully Integrated
+            </p>
           </li>
 
           <li
-            className={`${css.item} ${localFilters.form === 'alcove' ? css.checked : ''}`}
+            className={`${css.item} ${
+              localFilters.form === 'alcove'
+                ? css.checked
+                : ''
+            }`}
+            onClick={() =>
+              setLocalFilters(prev => ({
+                ...prev,
+                form:
+                  prev.form === 'alcove' ? '' : 'alcove',
+              }))
+            }
           >
-            <label>
-              <input
-                type="radio"
-                name="vehicleType"
-                value="alcove"
-                checked={localFilters.form === 'alcove'}
-                onChange={() =>
-                  handleRadio('form', 'alcove')
-                }
-                className={css.checkbox}
-              />
-              <p className={css.textAuto}>
-                <span>
-                  <svg className={css.svgF}>
-                    <use href="/sprite.svg#icon-bi_grid-3x3-gap" />
-                  </svg>
-                </span>
-                Alcove
-              </p>
-            </label>
+            <p className={css.textAuto}>
+              <span>
+                <svg className={css.svgF}>
+                  <use href="/sprite.svg#icon-bi_grid-3x3-gap" />
+                </svg>
+              </span>
+              Alcove
+            </p>
           </li>
         </ul>
       </div>
