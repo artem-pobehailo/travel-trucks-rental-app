@@ -112,122 +112,105 @@ export default function CatalogDetailsTruck() {
         <div className={css.featuresReviews}>
           {activeSection === 'features' && (
             <div className={css.features}>
-              <div className={css.auto}>
-                <p className={css.textAuto}>
-                  <span>
-                    <svg className={css.svg}>
-                      <use href="/sprite.svg#icon-diagram" />
-                    </svg>
-                  </span>
-                  {catalog.transmission
-                    .charAt(0)
-                    .toUpperCase() +
+              <ul className={css.auto}>
+                <li className={css.textAuto}>
+                  <svg className={css.svg}>
+                    <use href="/sprite.svg#icon-diagram" />
+                  </svg>
+                  {catalog.transmission[0].toUpperCase() +
                     catalog.transmission.slice(1)}
-                </p>
-                <p className={css.textAuto}>
-                  <span>
-                    <svg className={css.svg}>
-                      <use href="/sprite.svg#icon-Group" />
-                    </svg>
-                  </span>
-                  {catalog.engine.charAt(0).toUpperCase() +
+                </li>
+
+                <li className={css.textAuto}>
+                  <svg className={css.svg}>
+                    <use href="/sprite.svg#icon-Group" />
+                  </svg>
+                  {catalog.engine[0].toUpperCase() +
                     catalog.engine.slice(1)}
-                </p>
+                </li>
 
                 {catalog.kitchen && (
-                  <p className={css.textAuto}>
-                    <span>
-                      <svg className={css.svg}>
-                        <use href="/sprite.svg#icon-cup-hot" />
-                      </svg>
-                    </span>
+                  <li className={css.textAuto}>
+                    <svg className={css.svg}>
+                      <use href="/sprite.svg#icon-cup-hot" />
+                    </svg>
                     Kitchen
-                  </p>
+                  </li>
                 )}
 
                 {catalog.AC && (
-                  <p className={css.textAuto}>
-                    <span>
-                      <svg className={css.svg}>
-                        <use href="/sprite.svg#icon-wind" />
-                      </svg>
-                    </span>
+                  <li className={css.textAuto}>
+                    <svg className={css.svg}>
+                      <use href="/sprite.svg#icon-wind" />
+                    </svg>
                     AC
-                  </p>
+                  </li>
                 )}
 
                 {catalog.water && (
-                  <p className={css.textAuto}>
-                    <span>
-                      <svg className={css.svg}>
-                        <use href="/sprite.svg#icon-ion_water-outline" />
-                      </svg>
-                    </span>
+                  <li className={css.textAuto}>
+                    <svg className={css.svg}>
+                      <use href="/sprite.svg#icon-ion_water-outline" />
+                    </svg>
                     Water
-                  </p>
+                  </li>
                 )}
+
                 {catalog.gas && (
-                  <p className={css.textAuto}>
-                    <span>
-                      <svg className={css.svg}>
-                        <use href="/sprite.svg#icon-hugeicons_gas-stove" />
-                      </svg>
-                    </span>
+                  <li className={css.textAuto}>
+                    <svg className={css.svg}>
+                      <use href="/sprite.svg#icon-hugeicons_gas-stove" />
+                    </svg>
                     Gas
-                  </p>
+                  </li>
                 )}
+
                 {catalog.microwave && (
-                  <p className={css.textAuto}>
-                    <span>
-                      <svg className={css.svg}>
-                        <use href="/sprite.svg#icon-lucide_microwave" />
-                      </svg>
-                    </span>
+                  <li className={css.textAuto}>
+                    <svg className={css.svg}>
+                      <use href="/sprite.svg#icon-lucide_microwave" />
+                    </svg>
                     Microwave
-                  </p>
+                  </li>
                 )}
+
                 {catalog.refrigerator && (
-                  <p className={css.textAuto}>
-                    <span>
-                      <svg className={css.svg}>
-                        <use href="/sprite.svg#icon-solar_fridge-outline" />
-                      </svg>
-                    </span>
+                  <li className={css.textAuto}>
+                    <svg className={css.svg}>
+                      <use href="/sprite.svg#icon-solar_fridge-outline" />
+                    </svg>
                     Refrigerator
-                  </p>
+                  </li>
                 )}
+
                 {catalog.radio && (
-                  <p className={css.textAuto}>
-                    <span>
-                      <svg className={css.svg}>
-                        <use href="/sprite.svg#icon-ui-radios" />
-                      </svg>
-                    </span>
+                  <li className={css.textAuto}>
+                    <svg className={css.svg}>
+                      <use href="/sprite.svg#icon-ui-radios" />
+                    </svg>
                     Radio
-                  </p>
+                  </li>
                 )}
+
                 {catalog.TV && (
-                  <p className={css.textAuto}>
-                    <span>
-                      <svg className={css.svg}>
-                        <use href="/sprite.svg#icon-tv" />
-                      </svg>
-                    </span>
+                  <li className={css.textAuto}>
+                    <svg className={css.svg}>
+                      <use href="/sprite.svg#icon-tv" />
+                    </svg>
                     TV
-                  </p>
+                  </li>
                 )}
 
                 {catalog.bathroom && (
-                  <p className={css.textAuto}>
-                    <span>
-                      <svg className={css.svg}>
-                        <use href="/sprite.svg#icon-ph_shower" />
-                      </svg>
-                    </span>
+                  <li className={css.textAuto}>
+                    <svg className={css.svg}>
+                      <use href="/sprite.svg#icon-ph_shower" />
+                    </svg>
                     Bathroom
-                  </p>
+                  </li>
                 )}
-              </div>
+              </ul>
+
               <div className={css.datail}>
                 <h2 className={css.subtitel}>
                   Vehicle details
