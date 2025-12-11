@@ -7,16 +7,9 @@
   margin: 0;
   justify-content: center;
 }
-
-/* <div
-      style={{
-        display: 'flex',
-        gap: 64,
-
-        margin: 0,
-        justifyContent: 'center',
-      }}
-    > */
+.message {
+  width: 888px;
+}
 .list {
   display: flex;
   flex-wrap: wrap;

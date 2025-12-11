@@ -1,13 +1,9 @@
 'use client';
 
-import { Catalog } from '@/types/catalog';
+import { useEffect, useState, useMemo } from 'react';
 import css from './SideBarCatalogs.module.css';
-import { useEffect, useState } from 'react';
 import { useCatalogStore } from '@/lib/store/catalogStore';
-
-interface SideBarProps {
-  catalogs?: Catalog[];
-}
+import debounce from 'lodash.debounce';
 
 interface LocalFilters {
   location: string;
@@ -19,30 +15,43 @@ interface LocalFilters {
   transmission: string;
 }
 
-export default function SideBarCatalog({
-  catalogs = [],
-}: SideBarProps) {
+export default function SideBarCatalog() {
   const { filters, setFilters, campers } =
     useCatalogStore();
 
-  const safeCatalogs = campers;
-
-  const locations = Array.from(
-    new Set(safeCatalogs.map(c => c.location))
+  const [localFilters, setLocalFilters] =
+    useState<LocalFilters>(filters);
+  const [open, setOpen] = useState(false);
+  const [suggestions, setSuggestions] = useState<string[]>(
+    []
   );
 
-  const [localFilters, setLocalFilters] =
-    useState<LocalFilters>({
-      location: '',
-      form: '',
-      AC: false,
-      kitchen: false,
-      bathroom: false,
-      TV: false,
-      transmission: '',
-    });
-  const [open, setOpen] = useState(false);
+  const locations = useMemo(
+    () => Array.from(new Set(campers.map(c => c.location))),
+    [campers]
+  );
 
+  const updateSuggestions = useMemo(
+    () =>
+      debounce((value: string) => {
+        if (!value) return setSuggestions([]);
+
+        const filtered = locations.filter(loc =>
+          loc.toLowerCase().includes(value.toLowerCase())
+        );
+
+        setSuggestions(filtered);
+      }, 400),
+    [locations]
+  );
+
+  const handleLocationChange = (value: string) => {
+    setLocalFilters(prev => ({
+      ...prev,
+      location: value,
+    }));
+    updateSuggestions(value);
+  };
   const handleCheckbox = (key: keyof LocalFilters) => {
     setLocalFilters(prev => ({
       ...prev,
@@ -50,35 +59,11 @@ export default function SideBarCatalog({
     }));
   };
 
-  const handleTransmission = (value: string) => {
-    setLocalFilters(prev => ({
-      ...prev,
-      transmission:
-        prev.transmission === value ? '' : value,
-    }));
-  };
+  const handleSearch = () => setFilters(localFilters);
 
-  const handleRadio = (
-    key: keyof LocalFilters,
-    value: string
-  ) => {
-    setLocalFilters(prev => ({
-      ...prev,
-      [key]: prev[key] === value ? '' : value,
-    }));
-  };
-
-  const handleLocation = (loc: string) => {
-    setLocalFilters(prev => ({
-      ...prev,
-      location: loc,
-    }));
-    setOpen(false);
-  };
-
-  const handleSearch = () => {
-    setFilters(localFilters);
-  };
+  useEffect(() => {
+    setLocalFilters(filters);
+  }, [filters]);
 
   return (
     <div className={css.sidebar}>
@@ -90,48 +75,45 @@ export default function SideBarCatalog({
               className={css.textSidebar}
               type="text"
               placeholder="City"
-              value={
-                localFilters.location
-                  ? localFilters.location
-                      .split(', ')
-                      .reverse()
-                      .join(', ')
-                  : ''
+              value={localFilters.location
+                .split(', ')
+                .reverse()
+                .join(', ')}
+              onChange={e =>
+                handleLocationChange(e.target.value)
               }
-              onChange={e => {
-                const reversed = e.target.value
-                  .split(', ')
-                  .reverse()
-                  .join(', ');
-              }}
               onFocus={() => setOpen(true)}
             />
+
+            {open && suggestions.length > 0 && (
+              <ul>
+                {suggestions.map(loc => {
+                  const locat = loc
+                    .split(', ')
+                    .reverse()
+                    .join(', ');
+                  return (
+                    <li
+                      key={loc}
+                      className={css.textSidebar}
+                      onClick={() => {
+                        setLocalFilters(prev => ({
+                          ...prev,
+                          location: loc,
+                        }));
+                        setOpen(false);
+                      }}
+                    >
+                      <svg className={css.svg}>
+                        <use href="/sprite.svg#icon-map" />
+                      </svg>
+                      {locat}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </div>
-          {open && (
-            <ul>
-              {locations.map(loc => {
-                const locat = loc
-                  .split(', ')
-                  .reverse()
-                  .join(', ');
-                return (
-                  <li
-                    className={css.textSidebar}
-                    key={loc}
-                    onClick={() => {
-                      handleLocation(loc);
-                      setOpen(false);
-                    }}
-                  >
-                    <svg className={css.svg}>
-                      <use href="/sprite.svg#icon-map" />
-                    </svg>
-                    {locat}
-                  </li>
-                );
-              })}
-            </ul>
-          )}
         </div>
       </div>
 
