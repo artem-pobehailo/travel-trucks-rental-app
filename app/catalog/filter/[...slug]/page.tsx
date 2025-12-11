@@ -11,6 +11,7 @@ import { useCatalogStore } from '@/lib/store/catalogStore';
 import Loader from '@/components/Loader/Loader';
 import SideBarCatalog from '../@sidebar/SideBarCatalogs';
 import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
+import { useFavorites } from '@/components/useFavorites/useFavorites';
 
 export default function CatalogPage() {
   const {
@@ -32,7 +33,7 @@ export default function CatalogPage() {
   };
 
   const hasMore = campers.length < total;
-
+  const { isFavorite, toggleFavorite } = useFavorites();
   return (
     <section className={css.wrapper}>
       <div className={css.catalogContent}>
@@ -52,7 +53,6 @@ export default function CatalogPage() {
 
           {!loading && !error && campers.length > 0 && (
             <>
-              {' '}
               <ul className={css.list}>
                 {Array.isArray(campers) &&
                   campers.map(c => {
@@ -66,7 +66,7 @@ export default function CatalogPage() {
                     return (
                       <li
                         key={`${c.id}`}
-                        className={css.item}
+                        className={`${css.item} ${isFavorite(c.id) ? css.favoriteItem : ''}`}
                       >
                         <div className={css.imageWrapper}>
                           <Image
@@ -84,14 +84,25 @@ export default function CatalogPage() {
                             <h2 className={css.titel}>
                               {c.name}
                             </h2>
-                            <p className={css.text}>
-                              €{price}
-                              <span>
+                            <div className={css.vector}>
+                              <p className={css.text}>
+                                €{price}
+                              </p>
+                              <button
+                                className={
+                                  isFavorite(c.id)
+                                    ? `${css.vectorButton} ${css.activeFav}`
+                                    : css.vectorButton
+                                }
+                                onClick={() =>
+                                  toggleFavorite(c)
+                                }
+                              >
                                 <svg className={css.svg}>
                                   <use href="/sprite.svg#icon-Vector" />
                                 </svg>
-                              </span>
-                            </p>
+                              </button>
+                            </div>
                           </div>
                           <div className={css.map}>
                             <p className={css.textMap}>
@@ -153,6 +164,26 @@ export default function CatalogPage() {
                                   </svg>
                                 </span>
                                 AC
+                              </p>
+                            )}
+                            {c.TV && (
+                              <p className={css.textAuto}>
+                                <span>
+                                  <svg className={css.svg}>
+                                    <use href="/sprite.svg#icon-tv" />
+                                  </svg>
+                                </span>
+                                TV
+                              </p>
+                            )}
+                            {c.bathroom && (
+                              <p className={css.textAuto}>
+                                <span>
+                                  <svg className={css.svg}>
+                                    <use href="/sprite.svg#icon-ph_shower" />
+                                  </svg>
+                                </span>
+                                bathroom
                               </p>
                             )}
                           </div>

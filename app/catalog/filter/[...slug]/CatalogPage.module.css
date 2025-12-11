@@ -72,6 +72,25 @@
   line-height: 1.33333;
   color: #101828;
 }
+
+.vector {
+  display: flex;
+  gap: 12px;
+}
+.vectorButton {
+  background: transparent;
+  border: none;
+
+  transition: border-color 0.3s ease;
+}
+
+.favoriteItem {
+  border: 1px solid #d84343;
+}
+
+.activeFav svg {
+  fill: #d84343;
+}
 .text {
   display: flex;
   align-items: center;
@@ -137,7 +156,7 @@
   justify-content: center;
   width: 166px;
   height: 56px;
-
+  cursor: pointer;
   background: #e44848;
 
   font-family: 'Inter', sans-serif;
@@ -179,5 +198,5 @@
 .ButtonGray:hover,
 .ButtonGray:focus,
 .ButtonGray:active {
-  border: 1px solid 1px solid #d84343;
+  border: 1px solid #d84343;
 }
