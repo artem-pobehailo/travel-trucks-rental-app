@@ -1,11 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import css from './BookingForm.module.css';
 import { useParams } from 'next/navigation';
+import DatePicker, {
+  registerLocale,
+} from 'react-datepicker';
+import { enGB } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
+
+registerLocale('en-GB', enGB);
 
 export default function BookingForm() {
   const { id } = useParams<{ id: string }>();
+
+  const [date, setDate] = useState<Date | null>(null);
+  const dateString = date
+    ? date.toLocaleDateString('en-GB')
+    : '';
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const clearMessage = () => {
@@ -13,12 +26,24 @@ export default function BookingForm() {
     setSuccess(false);
   };
 
+  const CustomInput = React.forwardRef<
+    HTMLDivElement,
+    { value?: string; onClick?: () => void }
+  >(({ value, onClick }, ref) => (
+    <div
+      className={css.formInput}
+      onClick={onClick}
+      ref={ref}
+    >
+      <span className={css.dateText}>
+        {value || 'Booking date*'}
+      </span>
+    </div>
+  ));
+
   const handleSubmit = (formData: FormData) => {
     const username = formData.get('username') as string;
     const email = formData.get('email') as string;
-    const date = formData.get('date') as string;
-    const comment = formData.get('comment') as string;
-    const camperId = formData.get('camperId');
 
     if (username.trim().length < 2) {
       setError('Name must contain at least 2 characters.');
@@ -30,14 +55,16 @@ export default function BookingForm() {
       setError('Please enter a valid email address.');
       return;
     }
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-    if (!dateRegex.test(date)) {
-      setError('Date must be in format YYYY-MM-DD.');
+    if (!date) {
+      setError('Please choose a valid booking date.');
       return;
     }
-    const today = new Date().toISOString().split('T')[0];
-    if (!date || date < today) {
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (date < today) {
       setError('Please choose a valid booking date.');
       return;
     }
@@ -75,13 +102,15 @@ export default function BookingForm() {
             onInput={clearMessage}
           />
 
-          <input
-            className={css.formInput}
-            type="text"
-            placeholder="Booking date* YYYY-MM-DD"
-            name="date"
+          <DatePicker
+            locale={'en-GB'}
+            selected={date}
+            onChange={d => {
+              setDate(d);
+              clearMessage();
+            }}
+            customInput={<CustomInput />}
             required
-            onInput={clearMessage}
           />
 
           <textarea
