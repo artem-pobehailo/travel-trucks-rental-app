@@ -11,19 +11,21 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 registerLocale('en-GB', enGB);
 
+type ToastType = 'success' | 'error';
+
 export default function BookingForm() {
   const { id } = useParams<{ id: string }>();
 
   const [date, setDate] = useState<Date | null>(null);
-  const dateString = date
-    ? date.toLocaleDateString('en-GB')
-    : '';
 
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const clearMessage = () => {
-    setError(null);
-    setSuccess(false);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: ToastType;
+  } | null>(null);
+
+  const showToast = (message: string, type: ToastType) => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 600);
   };
 
   const CustomInput = React.forwardRef<
@@ -45,19 +47,30 @@ export default function BookingForm() {
     const username = formData.get('username') as string;
     const email = formData.get('email') as string;
 
-    if (username.trim().length < 2) {
-      setError('Name must contain at least 2 characters.');
+    const nameRegex = /^[A-Za-zА-Яа-яЇїІіЄєҐґ\s'-]{2,}$/;
+
+    if (!nameRegex.test(username.trim())) {
+      showToast(
+        'Please enter a valid name (letters only, min 2 characters).',
+        'error'
+      );
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError('Please enter a valid email address.');
+      showToast(
+        'Please enter a valid email address.',
+        'error'
+      );
       return;
     }
 
     if (!date) {
-      setError('Please choose a valid booking date.');
+      showToast(
+        'Please choose a valid booking date.',
+        'error'
+      );
       return;
     }
 
@@ -65,11 +78,13 @@ export default function BookingForm() {
     today.setHours(0, 0, 0, 0);
 
     if (date < today) {
-      setError('Please choose a valid booking date.');
+      showToast(
+        'Please choose a valid booking date.',
+        'error'
+      );
       return;
     }
-
-    setSuccess(true);
+    showToast('Your booking was successful!', 'success');
   };
 
   return (
@@ -90,7 +105,6 @@ export default function BookingForm() {
             placeholder="Name*"
             name="username"
             required
-            onInput={clearMessage}
           />
 
           <input
@@ -99,25 +113,19 @@ export default function BookingForm() {
             placeholder="Email*"
             name="email"
             required
-            onInput={clearMessage}
           />
 
           <DatePicker
             locale={'en-GB'}
             selected={date}
-            onChange={d => {
-              setDate(d);
-              clearMessage();
-            }}
+            onChange={setDate}
             customInput={<CustomInput />}
-            required
           />
 
           <textarea
             className={css.formArea}
             placeholder="Comment"
             name="comment"
-            onInput={clearMessage}
           />
         </div>
         <button className={css.ButtonRed} type="submit">
@@ -125,12 +133,16 @@ export default function BookingForm() {
         </button>
       </form>
 
-      {error && <p className={css.error}>{error}</p>}
-
-      {success && (
-        <p className={css.formTitel}>
-          Your booking has been sent successfully!
-        </p>
+      {toast && (
+        <div
+          className={
+            toast.type === 'success'
+              ? css.toastSuccess
+              : css.toastError
+          }
+        >
+          {toast.message}
+        </div>
       )}
     </div>
   );

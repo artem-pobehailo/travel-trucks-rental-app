@@ -84,13 +84,34 @@
 .ButtonRed:focus {
   background-color: #d84343;
 }
+.toastSuccess {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
 
-.error {
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 20px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #12b76a;
+  color: #fff;
 
-  line-height: 1.2;
-  color: #f00a0a;
-  padding-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.toastError {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #d92d20;
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
