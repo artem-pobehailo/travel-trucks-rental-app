@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Travel Trucks Rental App
 
-## Getting Started
+📌 Project Description
 
-First, run the development server:
+Travel Trucks Rental App is a modern web application for browsing and booking campervans.
+The app allows users to explore available vehicles, apply filters, view detailed information about each camper, and make a booking using a convenient form.
 
-```bash
+The project is built with Next.js and focuses on clean UI, accessibility, and user-friendly interactions.
+
+🚀 Features
+
+Browse a list of available campervans
+Filter campers by:
+Location
+Equipment (AC, kitchen, TV, bathroom, etc.)
+Vehicle type
+View detailed camper information:
+Gallery
+Price
+Rating and reviews
+Vehicle specifications
+Add campers to favorites
+Booking form with:
+Name and email validation
+Custom date picker (week starts on Monday)
+Success and error notifications (toast)
+
+🛠 Technologies Used
+
+Next.js (App Router)
+
+React
+TypeScript
+React Query
+Zustand
+React DatePicker
+CSS Modules
+date-fns
+
+📦 Installation
+
+Clone the repository:
+
+git clone https://github.com/your-username/travel-trucks-rental-app.git
+Navigate to the project directory:
+cd travel-trucks-rental-app
+
+Install dependencies:
+npm install
+
+Run the development server:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open the app in your browser:
+http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🧭 Usage
 
-## Learn More
+Browse the catalog to see available campervans
+Use filters to narrow down results
+Click "Show more" to view camper details
+Add campers to favorites
+Fill out the booking form and select a date
+Receive a notification after successful booking
 
-To learn more about Next.js, take a look at the following resources:
+👤 Author
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Your Artem
+Frontend Developer
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+GitHub: https://https://github.com/artem-pobehailo
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Email: partemishe@gmail.com
