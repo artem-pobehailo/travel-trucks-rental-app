@@ -65,7 +65,7 @@ Receive a notification after successful booking
 
 👤 Author
 
-Your Artem
+Artem
 Frontend Developer
 
 GitHub: https://https://github.com/artem-pobehailo
