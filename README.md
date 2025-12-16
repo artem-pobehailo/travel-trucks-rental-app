@@ -68,6 +68,6 @@ Receive a notification after successful booking
 Artem
 Frontend Developer
 
-GitHub: https://https://github.com/artem-pobehailo
+GitHub: https://github.com/artem-pobehailo
 
 Email: partemishe@gmail.com
