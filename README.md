@@ -41,7 +41,7 @@ date-fns
 
 Clone the repository:
 
-git clone https://github.com/your-username/travel-trucks-rental-app.git
+git clone .../travel-trucks-rental-app.git
 Navigate to the project directory:
 cd travel-trucks-rental-app
 
@@ -50,7 +50,6 @@ npm install
 
 Run the development server:
 npm run dev
-
 
 Open the app in your browser:
 http://localhost:3000
